@@ -7,25 +7,22 @@ namespace Mobs
 {
     public class MobView : MonoBehaviour
     {
-        private Transform _transform;
         private Tween _tween;
 
         private UnityAction _onEndMoveCallback;
 
         public void Init(Vector2 endPoint, float speed)
 		{
-            _transform = transform;
-
-            var toEndPointDistance = Vector2.Distance(_transform.position, endPoint);
+            var toEndPointDistance = Vector2.Distance(transform.position, endPoint);
             var duration = toEndPointDistance / speed;
-            _tween = _transform.DOMove(endPoint, duration)
+            _tween = transform.DOMove(endPoint, duration)
                 .SetEase(Ease.Linear)
                 .OnComplete(() => _onEndMoveCallback?.Invoke());
 
-            var scaleXMultiply = _transform.position.x <= endPoint.x ? -1 : 1;
-            var scaleTemp = _transform.localScale;
+            var scaleXMultiply = transform.position.x <= endPoint.x ? -1 : 1;
+            var scaleTemp = transform.localScale;
             scaleTemp.x *= scaleXMultiply;
-            _transform.localScale = scaleTemp;
+            transform.localScale = scaleTemp;
         }
 
         public void AddCallback(UnityAction onEndMoveCallback)
